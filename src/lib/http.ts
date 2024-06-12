@@ -78,7 +78,7 @@ const request = async <Response>(
       : {
           'Content-Type': 'application/json',
         };
-  if (isClient()) {
+  if (isClient) {
     const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
       baseHeaders.Authorization = `Bearer ${accessToken}`;
@@ -115,11 +115,11 @@ const request = async <Response>(
         }
       );
     } else if (res.status === AUTHENTICATION_ERROR_STATUS) {
-      if (isClient()) {
+      if (isClient) {
         if (!clientLogoutRequest) {
           clientLogoutRequest = fetch('/api/auth/logout', {
             method: 'POST',
-            body: null,
+            body: null, //logout không cần body
             headers: {
               ...baseHeaders,
             } as any,
@@ -149,7 +149,7 @@ const request = async <Response>(
     }
   }
   // Đảm bảo logic dưới đây chỉ chạy ở phía client (browser)
-  if (isClient()) {
+  if (isClient) {
     const normalizeUrl = normalizePath(url);
     if (normalizeUrl === 'api/auth/login') {
       const {
