@@ -41,3 +41,12 @@ export const handleErrorApi = ({
     });
   }
 };
+
+// Kiểm tra xem có phải là trình duyệt không
+const isBrowser = typeof window !== 'undefined';
+
+export const getAccessTokenFromLocalStorage = () =>
+  isBrowser ? localStorage.getItem('accessToken') : null;
+
+export const getRefreshTokenFromLocalStorage = () =>
+  isBrowser ? localStorage.getItem('refreshToken') : null;
